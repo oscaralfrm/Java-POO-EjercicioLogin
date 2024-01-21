@@ -3,6 +3,7 @@ package logica;
 import interfaz.MenuAdmins;
 import interfaz.MenuUsuarios;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
 import static javax.swing.WindowConstants.HIDE_ON_CLOSE;
 import persistencia.ControladorPersistencia;
@@ -41,7 +42,7 @@ public class Controlador {
                     
                     // Validamos que, si su usuario.getRol().getId() == 0, es Usuario, y si no, es Admin
                     
-                    if (usuario.getRolUsuario().getIdRol() == 0) {
+                    if (usuario.getRolUsuario().getIdRol() == 1) {
                         
                     MenuUsuarios pantallaMenuUsuarios = new MenuUsuarios();
                     pantallaMenuUsuarios.setVisible(true);
@@ -63,7 +64,7 @@ public class Controlador {
                     return mensaje;
                 }
             } else {
-                mensaje = "-- ERROR: DATOS NO INGRESADOS --";
+                mensaje = "-- ERROR: DATOS INCORRECTOS --";
 
             }
         
@@ -131,6 +132,29 @@ public class Controlador {
 
     public void editarUsuarioSeleccionado(Usuario usuario, String usuarioNombre, String usuarioContrasena, int idUsuarioRol) {
 
+        ArrayList<Usuario> listaDeUsuarios = controlPersist.traerUsuarios();
+        /*
+        for (Usuario usuario : listaDeUsuarios) {
+            if (!usuario.getNombreUsuario().equals(usuarioNombre)) {
+
+                controlPersist.editarUsuarioSeleccionado(usuario, usuarioNombre, usuarioContrasena, idUsuarioRol);
+
+                // Dejamos un mensajito...
+                JOptionPane.showMessageDialog(null, "Usuario editado exitosamente");
+                
+            } else {
+                
+                // Dejamos mensajito de error o de advertencia
+                JOptionPane.showMessageDialog(null, 
+                        "No se puede editar un usuario para que tenga el mismo nombre que otro",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                
+                break;
+            }
+        }
+*/
+        
+        
         // Empezamos a settear lo correspondiente... 
         
         usuario.setNombreUsuario(usuarioNombre);
@@ -152,12 +176,13 @@ public class Controlador {
         
     }
 
-    public void agregarUsuarioNuevo(String nombreUsuario, String contrasenaUsuario, int rolUsuario) {
+    public void agregarUsuarioNuevo(String nombreUsuario, String contrasenaUsuario, int idUsuario, int rolUsuario) {
 
         // Creamos un usuario con lo registrado, y setteamos los datos correspondientes
         
         Usuario usuarioNuevo = new Usuario();
         
+        usuarioNuevo.setId(idUsuario);
         usuarioNuevo.setNombreUsuario(nombreUsuario);
         usuarioNuevo.setContrasena(contrasenaUsuario);
         

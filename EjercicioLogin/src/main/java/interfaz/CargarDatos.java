@@ -1,5 +1,6 @@
 package interfaz;
 
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import logica.Controlador;
 import logica.Usuario;
@@ -34,12 +35,14 @@ public class CargarDatos extends javax.swing.JFrame {
         txtFields = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        txtUsuario = new javax.swing.JTextField();
+        txtIdUsuario = new javax.swing.JTextField();
         btnLimpiar = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
-        txtContrasena = new javax.swing.JPasswordField();
         jLabel13 = new javax.swing.JLabel();
         cmbRol = new javax.swing.JComboBox<>();
+        jLabel14 = new javax.swing.JLabel();
+        txtContrasena = new javax.swing.JPasswordField();
+        txtUsuario = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
@@ -84,16 +87,16 @@ public class CargarDatos extends javax.swing.JFrame {
         jLabel10.setFont(new java.awt.Font("Cantora One", 1, 32)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setText("Usuario");
-        txtFields.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
+        txtFields.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
 
         jLabel11.setFont(new java.awt.Font("Cantora One", 1, 32)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setText("Rol Asignado");
-        txtFields.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, -1, -1));
+        txtFields.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, -1, -1));
 
-        txtUsuario.setBackground(new java.awt.Color(255, 255, 255));
-        txtUsuario.setForeground(new java.awt.Color(0, 0, 0));
-        txtFields.add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 30, 221, -1));
+        txtIdUsuario.setBackground(new java.awt.Color(255, 255, 255));
+        txtIdUsuario.setForeground(new java.awt.Color(0, 0, 0));
+        txtFields.add(txtIdUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 100, 221, -1));
 
         btnLimpiar.setBackground(new java.awt.Color(51, 153, 0));
         btnLimpiar.setFont(new java.awt.Font("Cantora One", 1, 24)); // NOI18N
@@ -117,18 +120,27 @@ public class CargarDatos extends javax.swing.JFrame {
         });
         txtFields.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 190, 111, -1));
 
-        txtContrasena.setBackground(new java.awt.Color(255, 255, 255));
-        txtContrasena.setForeground(new java.awt.Color(0, 0, 0));
-        txtFields.add(txtContrasena, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 80, 221, -1));
-
         jLabel13.setFont(new java.awt.Font("Cantora One", 1, 32)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel13.setText("Contraseña");
-        txtFields.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, -1, -1));
+        jLabel13.setText("ID Usuario");
+        txtFields.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, -1, -1));
 
         cmbRol.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         cmbRol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Usuario", "Administrador" }));
-        txtFields.add(cmbRol, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 130, -1, -1));
+        txtFields.add(cmbRol, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 140, -1, -1));
+
+        jLabel14.setFont(new java.awt.Font("Cantora One", 1, 32)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel14.setText("Contraseña");
+        txtFields.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, -1, -1));
+
+        txtContrasena.setBackground(new java.awt.Color(255, 255, 255));
+        txtContrasena.setForeground(new java.awt.Color(0, 0, 0));
+        txtFields.add(txtContrasena, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 60, 221, -1));
+
+        txtUsuario.setBackground(new java.awt.Color(255, 255, 255));
+        txtUsuario.setForeground(new java.awt.Color(0, 0, 0));
+        txtFields.add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 20, 221, -1));
 
         bg.add(txtFields, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, 470, 250));
 
@@ -161,16 +173,34 @@ public class CargarDatos extends javax.swing.JFrame {
         
         String nombreUsuario = txtUsuario.getText();
         String contrasenaUsuario = txtContrasena.getText();
-        int rolUsuario = cmbRol.getSelectedIndex();
+        int idUsuario = Integer.parseInt(txtIdUsuario.getText());
+        // Si es 0 + 1 = 1, es USUARIO, si es 1 + 1 = 2, es ADMINISTRADOR
+        int rolUsuario = (cmbRol.getSelectedIndex() + 1);
         
         // Pasamos los parámetros al controlador...
         
-        controlador.agregarUsuarioNuevo(nombreUsuario, contrasenaUsuario, rolUsuario);
+        // Validamos de que no se repita el nombre de usuario a cargar...
+        
+        ArrayList<Usuario> listaDeUsuarios = controlador.traerUsuarios();
+        
+        for (Usuario usuario : listaDeUsuarios) {
+            if (!usuario.getNombreUsuario().equals(nombreUsuario)) {
+                controlador.agregarUsuarioNuevo(nombreUsuario, contrasenaUsuario, idUsuario, rolUsuario);
 
-        // Dejamos un mensajito
-        
-        JOptionPane.showMessageDialog(null, "Se ha completado el registro de sus datos exitosamente.");
-        
+                // Dejamos un mensajito
+                JOptionPane.showMessageDialog(null, "Se ha completado el registro de sus datos exitosamente.");
+                
+            } else {
+                
+                // Dejamos mensajito de error o de advertencia
+                JOptionPane.showMessageDialog(null, 
+                        "No se puede crear un usuario con el mismo nombre que otro",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                
+                break;
+            }
+        }
+
         limpiarCajas();
         
     }//GEN-LAST:event_btnGuardarActionPerformed
@@ -183,33 +213,10 @@ public class CargarDatos extends javax.swing.JFrame {
     private void limpiarCajas() {
         txtUsuario.setText("");
         txtContrasena.setText("");
+        txtIdUsuario.setText("");
         cmbRol.setSelectedIndex(0);
     }
     
-    private void rellenarCampos(int idUsuarioSeleccionado) {
-        
-        // Conseguimos los datos a 'gettear', y luego pasamos al controlador de la lógica
-        // los datos del objeto Usuario, y los atributos a settear posteriormente
-        
-        /*
-        String usuarioNombre = usuario.getNombreUsuario();
-        String usuarioContrasena = usuario.getContrasena();
-*/
-        
-        // Pedimos que el usuarioRol sea un int, que represente el ID del rol solicitado.
-        // Si es 0, es USUARIO, si es 1, es ADMINISTRADOR
-        int idUsuarioRol = cmbRol.getSelectedIndex();
-        
-        // Pasamos al controlador los datos correspondientes...
-                
-        // Dejamos un mensajito...
-        
-        JOptionPane.showMessageDialog(null, "Usuario editado exitosamente");
-        
-    }
-    
-    
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bg;
     private javax.swing.JButton btnGuardar;
@@ -220,6 +227,7 @@ public class CargarDatos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -229,6 +237,7 @@ public class CargarDatos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPasswordField txtContrasena;
     private javax.swing.JPanel txtFields;
+    private javax.swing.JTextField txtIdUsuario;
     private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
 }

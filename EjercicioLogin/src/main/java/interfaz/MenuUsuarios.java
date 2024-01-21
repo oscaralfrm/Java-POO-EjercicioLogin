@@ -180,11 +180,14 @@ public class MenuUsuarios extends javax.swing.JFrame {
 
         // Recorremos el arreglo de usuarios
         // Si no está vacía
-        if (tblUsuarios.getRowCount() > 0) {
+        if (listaDeUsuarios != null) {
             for (Usuario usuario : listaDeUsuarios) {
 
                 // Caragmos todo, menos la contraseña, obviamente
-                Object[] registroUsuario = {usuario.getId(), usuario.getNombreUsuario(), usuario.getRolUsuario()};
+                
+                // Mostramos además el nombre del rol del usuario.getRolUsuario().getNombreRol()
+                
+                Object[] registroUsuario = {usuario.getId(), usuario.getNombreUsuario(), usuario.getRolUsuario().getNombreRol()};
 
                 
                 modeloTabla.addRow(registroUsuario);

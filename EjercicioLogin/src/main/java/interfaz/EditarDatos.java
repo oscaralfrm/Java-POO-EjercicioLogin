@@ -1,5 +1,6 @@
 package interfaz;
 
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import logica.Controlador;
 import logica.Usuario;
@@ -184,6 +185,8 @@ public class EditarDatos extends javax.swing.JFrame {
     
     private void rellenarCampos(int idUsuarioSeleccionado) {
         
+        this.usuario = controlador.traerUsuarioSeleccionado(idUsuarioSeleccionado);
+        
         // Conseguimos los datos a 'gettear', y luego pasamos al controlador de la lógica
         // los datos del objeto Usuario, y los atributos a settear posteriormente
         
@@ -191,16 +194,37 @@ public class EditarDatos extends javax.swing.JFrame {
         String usuarioContrasena = usuario.getContrasena();
         
         // Pedimos que el usuarioRol sea un int, que represente el ID del rol solicitado.
-        // Si es 0, es USUARIO, si es 1, es ADMINISTRADOR
-        int idUsuarioRol = cmbRol.getSelectedIndex();
+        // Si es 0 + 1 = 1, es USUARIO, si es 1 + 1 = 2, es ADMINISTRADOR
+        int idUsuarioRol = (cmbRol.getSelectedIndex() + 1);
         
         // Pasamos al controlador los datos correspondientes...
         
-        controlador.editarUsuarioSeleccionado(usuario, usuarioNombre, usuarioContrasena, idUsuarioRol);
+        // Hay que validar de que el nombre de usuario por el que se va a cambiar, no exista ya
+        // en la BBDD, se tiene que hacer a nivel de la LÓGICA, no de la interfaz.
         
-        // Dejamos un mensajito...
+        ArrayList<Usuario> listaDeUsuarios = controlador.traerUsuarios();
         
-        JOptionPane.showMessageDialog(null, "Usuario editado exitosamente");
+        for (Usuario usuario : listaDeUsuarios) {
+            if (!usuario.getNombreUsuario().equals(usuarioNombre)) {
+
+                controlador.editarUsuarioSeleccionado(usuario, usuarioNombre, usuarioContrasena, idUsuarioRol);
+
+                // Dejamos un mensajito...
+                JOptionPane.showMessageDialog(null, "Usuario editado exitosamente");
+                
+            } else {
+                
+                // Dejamos mensajito de error o de advertencia
+                JOptionPane.showMessageDialog(null, 
+                        "No se puede editar un usuario para que tenga el mismo nombre que otro",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                
+                break;
+            }
+        }
+        
+        limpiarCajas();
+        
         
     }
     

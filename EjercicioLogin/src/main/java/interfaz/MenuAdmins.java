@@ -332,9 +332,9 @@ public class MenuAdmins extends javax.swing.JFrame {
         
         // Recorremos
         
-        if (tblUsuariosAdmin.getRowCount() > 0) {
+        if (listaDeUsuarios != null) {
             for (Usuario usuario : listaDeUsuarios) {
-                Object[] registroUsuario = {usuario.getId(), usuario.getNombreUsuario(), usuario.getRolUsuario()};
+                Object[] registroUsuario = {usuario.getId(), usuario.getNombreUsuario(), usuario.getRolUsuario().getNombreRol()};
                 
                 modeloTabla.addRow(registroUsuario);
                 
