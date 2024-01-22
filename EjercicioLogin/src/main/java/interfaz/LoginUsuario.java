@@ -1,5 +1,6 @@
 package interfaz;
 
+import javax.swing.JOptionPane;
 import logica.Controlador;
 
 public class LoginUsuario extends javax.swing.JFrame {
@@ -29,7 +30,6 @@ public class LoginUsuario extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         txtFields = new javax.swing.JPanel();
-        txtMensaje = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         txtUsuario = new javax.swing.JTextField();
@@ -48,7 +48,7 @@ public class LoginUsuario extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Cantora One", 1, 36)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(51, 153, 0));
         jLabel5.setText("Inicio de Sesión");
-        bg.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 140, -1, -1));
+        bg.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 140, -1, -1));
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/leaf-icon.png"))); // NOI18N
         bg.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 0, -1, -1));
@@ -76,16 +76,6 @@ public class LoginUsuario extends javax.swing.JFrame {
 
         txtFields.setBackground(new java.awt.Color(51, 102, 0));
 
-        txtMensaje.setEditable(false);
-        txtMensaje.setBackground(new java.awt.Color(0, 51, 0));
-        txtMensaje.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
-        txtMensaje.setForeground(new java.awt.Color(255, 255, 255));
-        txtMensaje.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtMensajeActionPerformed(evt);
-            }
-        });
-
         jLabel10.setFont(new java.awt.Font("Cantora One", 1, 24)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setText("Usuario");
@@ -97,10 +87,13 @@ public class LoginUsuario extends javax.swing.JFrame {
         txtUsuario.setBackground(new java.awt.Color(255, 255, 255));
         txtUsuario.setForeground(new java.awt.Color(0, 0, 0));
 
-        btnLimpiar.setBackground(new java.awt.Color(51, 153, 0));
+        btnLimpiar.setBackground(new java.awt.Color(255, 102, 102));
         btnLimpiar.setFont(new java.awt.Font("Cantora One", 1, 24)); // NOI18N
         btnLimpiar.setForeground(new java.awt.Color(255, 255, 255));
+        btnLimpiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/sweep-48.png"))); // NOI18N
         btnLimpiar.setText("Limpiar");
+        btnLimpiar.setBorderPainted(false);
+        btnLimpiar.setDefaultCapable(false);
         btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLimpiarActionPerformed(evt);
@@ -110,7 +103,10 @@ public class LoginUsuario extends javax.swing.JFrame {
         btnLogin.setBackground(new java.awt.Color(51, 153, 0));
         btnLogin.setFont(new java.awt.Font("Cantora One", 1, 24)); // NOI18N
         btnLogin.setForeground(new java.awt.Color(255, 255, 255));
+        btnLogin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/login-48.png"))); // NOI18N
         btnLogin.setText("Login");
+        btnLogin.setBorderPainted(false);
+        btnLogin.setDefaultCapable(false);
         btnLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLoginActionPerformed(evt);
@@ -127,14 +123,11 @@ public class LoginUsuario extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, txtFieldsLayout.createSequentialGroup()
                 .addGroup(txtFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(txtFieldsLayout.createSequentialGroup()
-                        .addGap(38, 38, 38)
-                        .addGroup(txtFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(txtFieldsLayout.createSequentialGroup()
-                                .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(32, 32, 32)
-                                .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(61, 61, 61))
-                            .addComponent(txtMensaje, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(12, 12, 12))
                     .addGroup(txtFieldsLayout.createSequentialGroup()
                         .addGap(45, 45, 45)
                         .addGroup(txtFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -149,21 +142,19 @@ public class LoginUsuario extends javax.swing.JFrame {
         txtFieldsLayout.setVerticalGroup(
             txtFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, txtFieldsLayout.createSequentialGroup()
-                .addGap(17, 17, 17)
+                .addContainerGap(40, Short.MAX_VALUE)
                 .addGroup(txtFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel10))
-                .addGap(5, 5, 5)
+                    .addComponent(jLabel10)
+                    .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20)
                 .addGroup(txtFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
                     .addComponent(txtContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(15, 15, 15)
+                .addGap(35, 35, 35)
                 .addGroup(txtFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnLogin)
                     .addComponent(btnLimpiar))
-                .addGap(18, 18, 18)
-                .addComponent(txtMensaje, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addGap(38, 38, 38))
         );
 
         bg.add(txtFields, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, 470, 250));
@@ -196,10 +187,6 @@ public class LoginUsuario extends javax.swing.JFrame {
         limpiarCajas();
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
-    private void txtMensajeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMensajeActionPerformed
-
-    }//GEN-LAST:event_txtMensajeActionPerformed
-
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         
         String mensaje = "";
@@ -209,7 +196,9 @@ public class LoginUsuario extends javax.swing.JFrame {
         
         mensaje = controlador.validarUsuario(nombreUsuario, contrasenaUsuario);
         
-        txtMensaje.setText(mensaje);
+        JOptionPane.showMessageDialog(null, mensaje);
+        
+        this.dispose();
         
         
     }//GEN-LAST:event_btnLoginActionPerformed
@@ -217,7 +206,6 @@ public class LoginUsuario extends javax.swing.JFrame {
     private void limpiarCajas() {
         txtUsuario.setText("");
         txtContrasena.setText("");
-        txtMensaje.setText("");
     }
     
 
@@ -238,7 +226,6 @@ public class LoginUsuario extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPasswordField txtContrasena;
     private javax.swing.JPanel txtFields;
-    private javax.swing.JTextField txtMensaje;
     private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
 }

@@ -1,6 +1,8 @@
 package interfaz;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
 import logica.Controlador;
 import logica.Usuario;
@@ -55,7 +57,7 @@ public class CargarDatos extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Cantora One", 1, 36)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(51, 153, 0));
         jLabel5.setText("Carga de Usuarios");
-        bg.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 140, -1, -1));
+        bg.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 140, -1, -1));
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/leaf-icon.png"))); // NOI18N
         bg.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 0, -1, -1));
@@ -98,27 +100,33 @@ public class CargarDatos extends javax.swing.JFrame {
         txtIdUsuario.setForeground(new java.awt.Color(0, 0, 0));
         txtFields.add(txtIdUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 100, 221, -1));
 
-        btnLimpiar.setBackground(new java.awt.Color(51, 153, 0));
+        btnLimpiar.setBackground(new java.awt.Color(255, 102, 102));
         btnLimpiar.setFont(new java.awt.Font("Cantora One", 1, 24)); // NOI18N
         btnLimpiar.setForeground(new java.awt.Color(255, 255, 255));
+        btnLimpiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/sweep-48.png"))); // NOI18N
         btnLimpiar.setText("Limpiar");
+        btnLimpiar.setBorderPainted(false);
+        btnLimpiar.setDefaultCapable(false);
         btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLimpiarActionPerformed(evt);
             }
         });
-        txtFields.add(btnLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 190, 122, -1));
+        txtFields.add(btnLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 180, 170, -1));
 
         btnGuardar.setBackground(new java.awt.Color(51, 153, 0));
         btnGuardar.setFont(new java.awt.Font("Cantora One", 1, 24)); // NOI18N
         btnGuardar.setForeground(new java.awt.Color(255, 255, 255));
+        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/save.png"))); // NOI18N
         btnGuardar.setText("Guardar");
+        btnGuardar.setBorderPainted(false);
+        btnGuardar.setDefaultCapable(false);
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGuardarActionPerformed(evt);
             }
         });
-        txtFields.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 190, 111, -1));
+        txtFields.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 180, 180, -1));
 
         jLabel13.setFont(new java.awt.Font("Cantora One", 1, 32)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
@@ -168,41 +176,61 @@ public class CargarDatos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+// En guardar, obtendremos los valores con .get() lo ingresado por el usuario
 
-        // En guardar, obtendremos los valores con .get() lo ingresado por el usuario
-        
         String nombreUsuario = txtUsuario.getText();
         String contrasenaUsuario = txtContrasena.getText();
         int idUsuario = Integer.parseInt(txtIdUsuario.getText());
         // Si es 0 + 1 = 1, es USUARIO, si es 1 + 1 = 2, es ADMINISTRADOR
         int rolUsuario = (cmbRol.getSelectedIndex() + 1);
+
+        boolean validacion = false;
         
         // Pasamos los parámetros al controlador...
-        
         // Validamos de que no se repita el nombre de usuario a cargar...
-        
         ArrayList<Usuario> listaDeUsuarios = controlador.traerUsuarios();
+
+        List<Usuario> listaFiltroNombre = listaDeUsuarios.stream().
+                filter(usuario -> usuario.getNombreUsuario().equals(nombreUsuario))
+                .collect(Collectors.toList());
+        
+        boolean condicionNombre = ( listaFiltroNombre.size() > 0);
+        
         
         for (Usuario usuario : listaDeUsuarios) {
-            if (!usuario.getNombreUsuario().equals(nombreUsuario)) {
-                controlador.agregarUsuarioNuevo(nombreUsuario, contrasenaUsuario, idUsuario, rolUsuario);
-
-                // Dejamos un mensajito
-                JOptionPane.showMessageDialog(null, "Se ha completado el registro de sus datos exitosamente.");
+            
+            
+            // Hacemos un algoritmo de búsqueda, si encuentra a alguno que esté repetido, corta.
+            
+            if ( condicionNombre ) {
                 
-            } else {
-                
-                // Dejamos mensajito de error o de advertencia
-                JOptionPane.showMessageDialog(null, 
-                        "No se puede crear un usuario con el mismo nombre que otro",
+                 // Dejamos mensajito de error o de advertencia
+                JOptionPane.showMessageDialog(null,
+                        "No se puede crear un usuario con el mismo nombre o ID que otro",
                         "Error", JOptionPane.ERROR_MESSAGE);
                 
                 break;
+                
+            } else {
+                
+
+                // Dejamos un mensajito
+                JOptionPane.showMessageDialog(null, "Se ha completado el registro de sus datos exitosamente.");
+                validacion = true;
+                break;
+                
             }
+            
+            
         }
 
-        limpiarCajas();
+        if (validacion) {
+            controlador.agregarUsuarioNuevo(nombreUsuario, contrasenaUsuario, idUsuario, rolUsuario);
+            limpiarCajas();
+            validacion = false;
+        }
         
+
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed

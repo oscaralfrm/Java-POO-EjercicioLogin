@@ -18,8 +18,6 @@ public class Controlador {
     
     
     public String validarUsuario(String nombreUsuario, String contrasenaUsuario) {
-
-        /*                        REVISAR, NO FUNCIONA BIEN                                                      */
         
         // Instanciamos inicialmente la respuesta a devolver
         String mensaje = "";
@@ -28,29 +26,27 @@ public class Controlador {
         ArrayList<Usuario> listaUsuarios = controlPersist.traerTodosUsuarios();
 
         for (Usuario usuario : listaUsuarios) {
-            
-            System.out.println("USUARIO BBDD: " + usuario.getNombreUsuario());
-            System.out.println("USUARIO INGRESADO: " + nombreUsuario);
-            System.out.println("CONTRASEÑA BBDD: " + usuario.getContrasena());
-            System.out.println("CONTRASEÑA INGRESADA: " + contrasenaUsuario);
-            
+              
             if (usuario.getNombreUsuario().equals(nombreUsuario)) {
  
                 if (usuario.getContrasena().equals(contrasenaUsuario)) {
-                    mensaje = "-- BIENVENIDO AL SISTEMA --";
+                    mensaje = "-- BIENVENID@ AL SISTEMA --";
+                    
+                    // Pasamos por parámetro a los constructores el nombre del usuario, para poder
+                    // mostrarlos por pantalla
                     
                     // Validamos que, si su usuario.getRol().getId() == 0, es Usuario, y si no, es Admin
                     
                     if (usuario.getRolUsuario().getIdRol() == 1) {
                         
-                    MenuUsuarios pantallaMenuUsuarios = new MenuUsuarios();
+                    MenuUsuarios pantallaMenuUsuarios = new MenuUsuarios(usuario);
                     pantallaMenuUsuarios.setVisible(true);
                     pantallaMenuUsuarios.setLocationRelativeTo(null);
                     pantallaMenuUsuarios.setDefaultCloseOperation(HIDE_ON_CLOSE);
                         
                     } else {
                      
-                     MenuAdmins pantallaMenuAdmins = new MenuAdmins();
+                     MenuAdmins pantallaMenuAdmins = new MenuAdmins(usuario);
                     pantallaMenuAdmins.setVisible(true);
                     pantallaMenuAdmins.setLocationRelativeTo(null);
                     pantallaMenuAdmins.setDefaultCloseOperation(HIDE_ON_CLOSE);
@@ -88,7 +84,7 @@ public class Controlador {
                     
                     // Le abrimos la ventana del menú de usuarios, que sólo permite la vista de los miembros
                     
-                    MenuUsuarios menuUsuarios = new MenuUsuarios();
+                    MenuUsuarios menuUsuarios = new MenuUsuarios(usuario);
                     menuUsuarios.setVisible(true);
                     menuUsuarios.setLocationRelativeTo(null);
                     menuUsuarios.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
@@ -97,7 +93,7 @@ public class Controlador {
                     
                     // En esta rama, se abrirá la pantalla del menú de los administradores...
                     
-                    MenuAdmins menuAdmins = new MenuAdmins();
+                    MenuAdmins menuAdmins = new MenuAdmins(usuario);
                     menuAdmins.setVisible(true);
                     menuAdmins.setLocationRelativeTo(null);
                     menuAdmins.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);

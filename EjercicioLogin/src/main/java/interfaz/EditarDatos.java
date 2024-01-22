@@ -1,6 +1,8 @@
 package interfaz;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
 import logica.Controlador;
 import logica.Usuario;
@@ -10,7 +12,7 @@ public class EditarDatos extends javax.swing.JFrame {
     Controlador controlador = null;
     int idUsuarioReal;
     Usuario usuario;
-    
+
     public EditarDatos(int idUsuarioReal) {
         controlador = new Controlador();
         initComponents();
@@ -57,7 +59,7 @@ public class EditarDatos extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Cantora One", 1, 36)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(51, 153, 0));
         jLabel5.setText("Edición de Usuarios");
-        bg.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 140, -1, -1));
+        bg.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 140, -1, -1));
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/leaf-icon.png"))); // NOI18N
         bg.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 0, -1, -1));
@@ -100,27 +102,33 @@ public class EditarDatos extends javax.swing.JFrame {
         txtUsuario.setForeground(new java.awt.Color(0, 0, 0));
         txtFields.add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 30, 221, -1));
 
-        btnLimpiar.setBackground(new java.awt.Color(51, 153, 0));
+        btnLimpiar.setBackground(new java.awt.Color(255, 102, 102));
         btnLimpiar.setFont(new java.awt.Font("Cantora One", 1, 24)); // NOI18N
         btnLimpiar.setForeground(new java.awt.Color(255, 255, 255));
+        btnLimpiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/sweep-48.png"))); // NOI18N
         btnLimpiar.setText("Limpiar");
+        btnLimpiar.setBorderPainted(false);
+        btnLimpiar.setDefaultCapable(false);
         btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLimpiarActionPerformed(evt);
             }
         });
-        txtFields.add(btnLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 190, 122, -1));
+        txtFields.add(btnLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 180, 170, -1));
 
         btnGuardar.setBackground(new java.awt.Color(51, 153, 0));
         btnGuardar.setFont(new java.awt.Font("Cantora One", 1, 24)); // NOI18N
         btnGuardar.setForeground(new java.awt.Color(255, 255, 255));
+        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/save.png"))); // NOI18N
         btnGuardar.setText("Guardar");
+        btnGuardar.setBorderPainted(false);
+        btnGuardar.setDefaultCapable(false);
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGuardarActionPerformed(evt);
             }
         });
-        txtFields.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 190, 111, -1));
+        txtFields.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 180, 180, -1));
 
         txtContrasena.setBackground(new java.awt.Color(255, 255, 255));
         txtContrasena.setForeground(new java.awt.Color(0, 0, 0));
@@ -165,33 +173,49 @@ public class EditarDatos extends javax.swing.JFrame {
         String usuarioNombre = txtUsuario.getText();
         String usuarioContrasena = txtContrasena.getText();
         int idUsuarioRol = cmbRol.getSelectedIndex() + 1;
-        
+        boolean validacion = false;
+
         // Pasamos al controlador los datos correspondientes...
-        
         // Hay que validar de que el nombre de usuario por el que se va a cambiar, no exista ya
         // en la BBDD, se tiene que hacer a nivel de la LÓGICA, no de la interfaz.
-        
         ArrayList<Usuario> listaDeUsuarios = controlador.traerUsuarios();
+
+                List<Usuario> listaFiltroNombre = listaDeUsuarios.stream().
+                filter(persona -> persona.getNombreUsuario().equals(usuarioNombre))
+                .collect(Collectors.toList());
+                
+        boolean condicionNombre = ( listaFiltroNombre.size() > 1 );
         
         for (Usuario usuarioArreglo : listaDeUsuarios) {
-            if (!usuarioArreglo.getNombreUsuario().equals(usuarioNombre)) {
 
-                controlador.editarUsuarioSeleccionado(usuario, usuarioNombre, usuarioContrasena, idUsuarioRol);
+            
+            // Hacemos un algoritmo de búsqueda, si encuentra a alguno que esté repetido, corta.
+            if (condicionNombre) {
+
+                // Dejamos mensajito de error o de advertencia
+                JOptionPane.showMessageDialog(null,
+                        "No se puede editar un usuario para que tenga el mismo nombre que otro",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+
+                break;
+
+            } else {
 
                 // Dejamos un mensajito...
                 JOptionPane.showMessageDialog(null, "Usuario editado exitosamente");
+                validacion = true;
                 break;
-                
-            } else {
-                
-                // Dejamos mensajito de error o de advertencia
-                JOptionPane.showMessageDialog(null, 
-                        "No se puede editar un usuario para que tenga el mismo nombre que otro",
-                        "Error", JOptionPane.ERROR_MESSAGE);
-                
-                break;
+
             }
+
         }
+        
+        if (validacion) {
+            controlador.editarUsuarioSeleccionado(usuario, usuarioNombre, usuarioContrasena, idUsuarioRol);
+            limpiarCajas();
+            validacion = false;
+        }
+
 
     }//GEN-LAST:event_btnGuardarActionPerformed
 
@@ -205,32 +229,28 @@ public class EditarDatos extends javax.swing.JFrame {
         txtContrasena.setText("");
         cmbRol.setSelectedIndex(0);
     }
-    
+
     private void rellenarCampos(int idUsuarioSeleccionado) {
-        
+
         this.usuario = controlador.traerUsuarioSeleccionado(idUsuarioSeleccionado);
-        
+
         // Conseguimos los datos a 'gettear', y luego pasamos al controlador de la lógica
         // los datos del objeto Usuario, y los atributos a settear posteriormente
-        
         String usuarioNombre = usuario.getNombreUsuario();
-        
+
         // Deberíamos ocultar la contraseña, no ponerla directamente en la caja de contraseña
         // String usuarioContrasena = usuario.getContrasena();
-                
         txtUsuario.setText(usuarioNombre);
         txtContrasena.setText("********");
-        
+
         if (String.valueOf(usuario.getRolUsuario().getNombreRol()).equalsIgnoreCase("Usuario")) {
             cmbRol.setSelectedIndex(0);
         } else {
             cmbRol.setSelectedIndex(1);
         }
 
-        
     }
-    
-    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bg;

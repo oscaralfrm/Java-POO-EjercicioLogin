@@ -7,7 +7,10 @@ interfaz\CargarDatos$1.class
 interfaz\LoginUsuario$1.class
 interfaz\MenuAdmins$1.class
 logica\Rol_.class
+interfaz\MenuUsuarios$4.class
+interfaz\MenuAdmins$7.class
 interfaz\MenuPrincipal$2.class
+interfaz\MenuUsuarios$3.class
 persistencia\ControladorPersistencia.class
 interfaz\MenuAdmins$6.class
 interfaz\MenuPrincipal$1.class
@@ -30,6 +33,5 @@ persistencia\exceptions\NonexistentEntityException.class
 interfaz\MenuAdmins$4.class
 interfaz\EditarDatos$1.class
 persistencia\UsuarioJpaController.class
-interfaz\LoginUsuario$3.class
 interfaz\MenuAdmins$3.class
 interfaz\EditarDatos$2.class

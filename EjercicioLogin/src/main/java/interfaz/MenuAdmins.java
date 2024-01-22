@@ -1,6 +1,8 @@
 package interfaz;
 
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import logica.Controlador;
@@ -9,9 +11,12 @@ import logica.Usuario;
 public class MenuAdmins extends javax.swing.JFrame {
 
     Controlador controlador = null;
-    
-    public MenuAdmins() {
+    String nombreUsuario;
+    Usuario usuarioMenu;
+
+    public MenuAdmins(Usuario usuarioMenu) {
         controlador = new Controlador();
+        this.nombreUsuario = usuarioMenu.getNombreUsuario();
         this.setResizable(false);
         initComponents();
     }
@@ -28,17 +33,21 @@ public class MenuAdmins extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
+        lblUsuarioConectado = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
-        btnCargar = new javax.swing.JButton();
+        btnSalir = new javax.swing.JButton();
         btnRegistrar = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
+        btnCargar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblUsuariosAdmin = new javax.swing.JTable();
         jLabel12 = new javax.swing.JLabel();
@@ -60,7 +69,12 @@ public class MenuAdmins extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Cantora One", 1, 36)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Panel de Admins");
-        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 80, -1, -1));
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 80, -1, -1));
+
+        jLabel13.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel13.setText("Bienvenid@:");
+        jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 10, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Cantora One", 1, 36)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
@@ -81,34 +95,47 @@ public class MenuAdmins extends javax.swing.JFrame {
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/sunflower-130.png"))); // NOI18N
         jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 0, -1, -1));
 
+        lblUsuarioConectado.setBackground(new java.awt.Color(255, 255, 255));
+        lblUsuarioConectado.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
+        lblUsuarioConectado.setForeground(new java.awt.Color(255, 255, 255));
+        lblUsuarioConectado.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblUsuarioConectado.setText("Texto");
+        lblUsuarioConectado.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jPanel2.add(lblUsuarioConectado, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 40, 180, -1));
+
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/grass-path-920.png"))); // NOI18N
         jLabel1.setText("jLabel1");
         jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -120, -1, -1));
+
+        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/leaves-border-1-430.png"))); // NOI18N
+        jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, -110, -1, -1));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, 920, 130));
 
         jPanel3.setBackground(new java.awt.Color(255, 153, 255));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        btnCargar.setBackground(new java.awt.Color(51, 153, 0));
-        btnCargar.setFont(new java.awt.Font("Cantora One", 1, 36)); // NOI18N
-        btnCargar.setForeground(new java.awt.Color(255, 255, 255));
-        btnCargar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/recycle.png"))); // NOI18N
-        btnCargar.setText("Cargar");
-        btnCargar.setDefaultCapable(false);
-        btnCargar.setIconTextGap(6);
-        btnCargar.addActionListener(new java.awt.event.ActionListener() {
+        btnSalir.setBackground(new java.awt.Color(255, 102, 102));
+        btnSalir.setFont(new java.awt.Font("Cantora One", 1, 28)); // NOI18N
+        btnSalir.setForeground(new java.awt.Color(255, 255, 255));
+        btnSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/right-down.png"))); // NOI18N
+        btnSalir.setText("Salir");
+        btnSalir.setBorderPainted(false);
+        btnSalir.setDefaultCapable(false);
+        btnSalir.setIconTextGap(6);
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCargarActionPerformed(evt);
+                btnSalirActionPerformed(evt);
             }
         });
-        jPanel3.add(btnCargar, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 330, 230, -1));
+        jPanel3.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 430, 230, -1));
 
-        btnRegistrar.setBackground(new java.awt.Color(51, 153, 0));
-        btnRegistrar.setFont(new java.awt.Font("Cantora One", 1, 36)); // NOI18N
+        btnRegistrar.setBackground(new java.awt.Color(102, 102, 255));
+        btnRegistrar.setFont(new java.awt.Font("Cantora One", 1, 28)); // NOI18N
         btnRegistrar.setForeground(new java.awt.Color(255, 255, 255));
         btnRegistrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/add-person.png"))); // NOI18N
         btnRegistrar.setText("Registrar");
+        btnRegistrar.setBorderPainted(false);
         btnRegistrar.setDefaultCapable(false);
         btnRegistrar.setIconTextGap(6);
         btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
@@ -116,13 +143,14 @@ public class MenuAdmins extends javax.swing.JFrame {
                 btnRegistrarActionPerformed(evt);
             }
         });
-        jPanel3.add(btnRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 60, 230, -1));
+        jPanel3.add(btnRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 40, 230, -1));
 
-        btnEditar.setBackground(new java.awt.Color(51, 153, 0));
-        btnEditar.setFont(new java.awt.Font("Cantora One", 1, 36)); // NOI18N
+        btnEditar.setBackground(new java.awt.Color(0, 153, 153));
+        btnEditar.setFont(new java.awt.Font("Cantora One", 1, 28)); // NOI18N
         btnEditar.setForeground(new java.awt.Color(255, 255, 255));
         btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/edit.png"))); // NOI18N
         btnEditar.setText("Editar");
+        btnEditar.setBorderPainted(false);
         btnEditar.setDefaultCapable(false);
         btnEditar.setIconTextGap(6);
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
@@ -130,13 +158,14 @@ public class MenuAdmins extends javax.swing.JFrame {
                 btnEditarActionPerformed(evt);
             }
         });
-        jPanel3.add(btnEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 150, 230, -1));
+        jPanel3.add(btnEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 130, 230, -1));
 
-        btnEliminar.setBackground(new java.awt.Color(51, 153, 0));
-        btnEliminar.setFont(new java.awt.Font("Cantora One", 1, 36)); // NOI18N
+        btnEliminar.setBackground(new java.awt.Color(255, 51, 102));
+        btnEliminar.setFont(new java.awt.Font("Cantora One", 1, 28)); // NOI18N
         btnEliminar.setForeground(new java.awt.Color(255, 255, 255));
         btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/delete-person.png"))); // NOI18N
         btnEliminar.setText("Eliminar");
+        btnEliminar.setBorderPainted(false);
         btnEliminar.setDefaultCapable(false);
         btnEliminar.setIconTextGap(6);
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
@@ -144,7 +173,22 @@ public class MenuAdmins extends javax.swing.JFrame {
                 btnEliminarActionPerformed(evt);
             }
         });
-        jPanel3.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 240, 230, -1));
+        jPanel3.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 220, 230, -1));
+
+        btnCargar.setBackground(new java.awt.Color(255, 153, 0));
+        btnCargar.setFont(new java.awt.Font("Cantora One", 1, 28)); // NOI18N
+        btnCargar.setForeground(new java.awt.Color(255, 255, 255));
+        btnCargar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/recycle.png"))); // NOI18N
+        btnCargar.setText("Cargar");
+        btnCargar.setBorderPainted(false);
+        btnCargar.setDefaultCapable(false);
+        btnCargar.setIconTextGap(6);
+        btnCargar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCargarActionPerformed(evt);
+            }
+        });
+        jPanel3.add(btnCargar, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 310, 230, -1));
 
         tblUsuariosAdmin.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -159,7 +203,7 @@ public class MenuAdmins extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tblUsuariosAdmin);
 
-        jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 30, -1, -1));
+        jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 30, -1, 380));
 
         jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/florista-3.png"))); // NOI18N
         jPanel3.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(-60, 50, -1, -1));
@@ -184,10 +228,107 @@ public class MenuAdmins extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        
+
+        lblUsuarioConectado.setText(nombreUsuario);
         cargarTabla();
-        
+
     }//GEN-LAST:event_formWindowOpened
+
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+
+        this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+
+    }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
+
+        CargarDatos pantallaCargarDatos = new CargarDatos();
+        pantallaCargarDatos.setVisible(true);
+        pantallaCargarDatos.setLocationRelativeTo(null);
+        pantallaCargarDatos.setDefaultCloseOperation(HIDE_ON_CLOSE);
+
+    }//GEN-LAST:event_btnRegistrarActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+
+        if (tblUsuariosAdmin.getRowCount() > 0) {
+            if (tblUsuariosAdmin.getSelectedRow() != -1) {
+
+                int idProvisorio = Integer.parseInt(String.valueOf(tblUsuariosAdmin.getValueAt(tblUsuariosAdmin.getSelectedRow(), 0)));
+
+                Usuario usuarioSeleccionado = controlador.traerUsuarioSeleccionado(idProvisorio);
+
+                int idUsuarioReal = usuarioSeleccionado.getId();
+
+                // Le pasamos el id asociado encontrado y seleccionado
+                EditarDatos pantallaEditarDatos = new EditarDatos(idUsuarioReal);
+                pantallaEditarDatos.setVisible(true);
+                pantallaEditarDatos.setLocationRelativeTo(null);
+                pantallaEditarDatos.setDefaultCloseOperation(HIDE_ON_CLOSE);
+
+                cargarTabla();
+                
+
+            } else {
+
+                JOptionPane.showMessageDialog(null,
+                        "Error - No se seleccionó ningún usuario", "Error",
+                        JOptionPane.ERROR_MESSAGE);
+
+            }
+        }
+
+
+    }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+
+        // Primero verificamos que la tabla no esté vacía
+        if (tblUsuariosAdmin.getRowCount() > 0) {
+
+            // Verificamos que hayamos seleccionado un registro
+            if (tblUsuariosAdmin.getSelectedRow() != -1) {
+
+                // Conseguimos el valor convertido a String de lo seleccionado en la tabla
+                int numeroRegistroTabla = Integer.parseInt(String.valueOf(tblUsuariosAdmin.getValueAt(tblUsuariosAdmin.getSelectedRow(), 0)));
+
+                // Éste valor luego se lo pasamos alcontrolador para que devuelva el objeto real
+                Object[] opciones = {"Si", "No"};
+
+                int resultado = JOptionPane.showOptionDialog(null,
+                        "¿Está seguro de querer eliminar al usuario?",
+                        "Confirmación - Eliminación de Usuario",
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.QUESTION_MESSAGE,
+                        null, opciones, opciones[0]);
+
+                // En función a la respuesta obtenida, hacemos:
+                if (resultado == JOptionPane.YES_OPTION) {
+
+                    Usuario usuario = controlador.traerUsuarioSeleccionado(numeroRegistroTabla);
+
+                    // Conseguimos el ID del usuario seleccionado...
+                    int idUsuario = usuario.getId();
+
+                    // Mandamos a eliminar al usuario cuyo ID ha sido curado y es el cierto
+                    JOptionPane.showMessageDialog(null, "Usuario eliminado exitosamente" );
+
+                    controlador.eliminarUsuarioSeleccionado(idUsuario);
+
+                    cargarTabla();
+
+                }
+
+            } else {
+
+                JOptionPane.showMessageDialog(null, "Error - No se seleccionó ningún usuario",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+
+            }
+
+        }
+
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnCargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarActionPerformed
 
@@ -195,108 +336,18 @@ public class MenuAdmins extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnCargarActionPerformed
 
-    private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
-       
-        CargarDatos pantallaCargarDatos = new CargarDatos();
-        pantallaCargarDatos.setVisible(true);
-        pantallaCargarDatos.setLocationRelativeTo(null);
-        pantallaCargarDatos.setDefaultCloseOperation(HIDE_ON_CLOSE);
-        
-    }//GEN-LAST:event_btnRegistrarActionPerformed
-
-    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        
-        if (tblUsuariosAdmin.getRowCount() > 0) {
-            if (tblUsuariosAdmin.getSelectedRow() != -1) {
-                
-                int idProvisorio = Integer.parseInt(String.valueOf(tblUsuariosAdmin.getValueAt(tblUsuariosAdmin.getSelectedRow(), 0)));
-                
-                Usuario usuarioSeleccionado = controlador.traerUsuarioSeleccionado(idProvisorio);
-                
-                int idUsuarioReal = usuarioSeleccionado.getId();
-                
-                 // Le pasamos el id asociado encontrado y seleccionado
-        
-                EditarDatos pantallaEditarDatos = new EditarDatos(idUsuarioReal);
-                pantallaEditarDatos.setVisible(true);
-                pantallaEditarDatos.setLocationRelativeTo(null);
-                pantallaEditarDatos.setDefaultCloseOperation(HIDE_ON_CLOSE);
-                
-                cargarTabla();
-                
-            }
-        }
-    
-
-        
-    }//GEN-LAST:event_btnEditarActionPerformed
-
-    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-       
-        // Primero verificamos que la tabla no esté vacía
-        
-        if (tblUsuariosAdmin.getRowCount() > 0) {
-            
-            // Verificamos que hayamos seleccionado un registro
-            
-            if (tblUsuariosAdmin.getSelectedRow() != -1) {
-                
-                // Conseguimos el valor convertido a String de lo seleccionado en la tabla
-                
-                int numeroRegistroTabla = Integer.parseInt(String.valueOf(tblUsuariosAdmin.getValueAt(tblUsuariosAdmin.getSelectedRow(), 0)));
-                
-                // Éste valor luego se lo pasamos alcontrolador para que devuelva el objeto real
-                
-                Object[] opciones = {"Si", "No"};
-                
-                int resultado = JOptionPane.showOptionDialog(null, 
-                        "¿Está seguro de querer eliminar al usuario?",
-                        "Confirmación - Eliminación de Usuario", 
-                        JOptionPane.YES_NO_OPTION, 
-                        JOptionPane.QUESTION_MESSAGE, 
-                        null, opciones, opciones[0]);
-                
-                // En función a la respuesta obtenida, hacemos:
-                
-                if (resultado == JOptionPane.YES_OPTION) {
-                    
-                    Usuario usuario = controlador.traerUsuarioSeleccionado(numeroRegistroTabla);
-                    
-                    // Conseguimos el ID del usuario seleccionado...
-                    
-                    int idUsuario = usuario.getId();
-                    
-                    // Mandamos a eliminar al usuario cuyo ID ha sido curado y es el cierto
-                    
-                    JOptionPane.showMessageDialog(null, "Usuario Eliminado: " + usuario.toString());
-                    
-                    controlador.eliminarUsuarioSeleccionado(idUsuario);
-                    
-                    cargarTabla();
-                    
-                    
-                } else {
-                    
-                    JOptionPane.showMessageDialog(null, "Error - No se seleccionó ningún usuario", 
-                            "Error", JOptionPane.ERROR_MESSAGE);
-                    
-                }
-                
-            }
-            
-        }
-        
-    }//GEN-LAST:event_btnEliminarActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCargar;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnRegistrar;
+    private javax.swing.JButton btnSalir;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -307,6 +358,7 @@ public class MenuAdmins extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblUsuarioConectado;
     private javax.swing.JTable tblUsuariosAdmin;
     // End of variables declaration//GEN-END:variables
 
@@ -319,31 +371,25 @@ public class MenuAdmins extends javax.swing.JFrame {
             }
 
         };
-        
+
         String[] camposTabla = {"ID", "Nombre de Usuario", "Rol"};
-        
+
         modeloTabla.setColumnIdentifiers(camposTabla);
-        
+
         tblUsuariosAdmin.setModel(modeloTabla);
-        
+
         // Traemos la lista de usuarios
-        
         ArrayList<Usuario> listaDeUsuarios = controlador.traerUsuarios();
-        
+
         // Recorremos
-        
         if (listaDeUsuarios != null) {
             for (Usuario usuario : listaDeUsuarios) {
                 Object[] registroUsuario = {usuario.getId(), usuario.getNombreUsuario(), usuario.getRolUsuario().getNombreRol()};
-                
+
                 modeloTabla.addRow(registroUsuario);
-                
+
             }
         }
-        
-        
-        
-        
-        
+
     }
 }

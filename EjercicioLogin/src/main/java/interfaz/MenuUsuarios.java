@@ -1,6 +1,8 @@
 package interfaz;
 
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
+import javax.swing.JLabel;
 import javax.swing.table.DefaultTableModel;
 import logica.Controlador;
 import logica.Usuario;
@@ -8,12 +10,15 @@ import logica.Usuario;
 public class MenuUsuarios extends javax.swing.JFrame {
 
     Controlador controlador = null;
-    
+    String nombreUsuario;
+    Usuario usuarioMenu;
+
     /**
      * Creates new form MenuUsuarios
      */
-    public MenuUsuarios() {
+    public MenuUsuarios(Usuario usuarioMenu) {
         controlador = new Controlador();
+        this.nombreUsuario = usuarioMenu.getNombreUsuario();
         this.setResizable(false);
         initComponents();
     }
@@ -28,15 +33,20 @@ public class MenuUsuarios extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel13 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
+        lblUsuarioConectado = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
+        btnCargar = new javax.swing.JButton();
+        btnSalir = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblUsuarios = new javax.swing.JTable();
         jLabel12 = new javax.swing.JLabel();
@@ -54,13 +64,18 @@ public class MenuUsuarios extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel2.setBackground(new java.awt.Color(204, 255, 255));
-        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
         jLabel3.setFont(new java.awt.Font("Cantora One", 1, 36)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Panel de Usuarios");
-        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 80, -1, -1));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 80, -1, -1));
+
+        jPanel2.setBackground(new java.awt.Color(204, 255, 255));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel13.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel13.setText("Bienvenid@:");
+        jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 10, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Cantora One", 1, 36)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
@@ -81,14 +96,53 @@ public class MenuUsuarios extends javax.swing.JFrame {
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/sunflower-130.png"))); // NOI18N
         jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 0, -1, -1));
 
+        lblUsuarioConectado.setBackground(new java.awt.Color(255, 255, 255));
+        lblUsuarioConectado.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
+        lblUsuarioConectado.setForeground(new java.awt.Color(255, 255, 255));
+        lblUsuarioConectado.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblUsuarioConectado.setText("Texto");
+        lblUsuarioConectado.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jPanel2.add(lblUsuarioConectado, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 40, 180, -1));
+
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/grass-path-920.png"))); // NOI18N
         jLabel1.setText("jLabel1");
         jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -120, -1, -1));
+
+        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/leaves-border-1-430.png"))); // NOI18N
+        jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, -110, -1, -1));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, 920, 130));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 102));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btnCargar.setBackground(new java.awt.Color(255, 153, 0));
+        btnCargar.setFont(new java.awt.Font("Cantora One", 1, 28)); // NOI18N
+        btnCargar.setForeground(new java.awt.Color(255, 255, 255));
+        btnCargar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/recycle.png"))); // NOI18N
+        btnCargar.setText("Cargar");
+        btnCargar.setDefaultCapable(false);
+        btnCargar.setIconTextGap(6);
+        btnCargar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCargarActionPerformed(evt);
+            }
+        });
+        jPanel3.add(btnCargar, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 170, 230, -1));
+
+        btnSalir.setBackground(new java.awt.Color(255, 102, 102));
+        btnSalir.setFont(new java.awt.Font("Cantora One", 1, 28)); // NOI18N
+        btnSalir.setForeground(new java.awt.Color(255, 255, 255));
+        btnSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/right-down.png"))); // NOI18N
+        btnSalir.setText("Salir");
+        btnSalir.setDefaultCapable(false);
+        btnSalir.setIconTextGap(6);
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalirActionPerformed(evt);
+            }
+        });
+        jPanel3.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 260, 230, -1));
 
         tblUsuarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -103,10 +157,10 @@ public class MenuUsuarios extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tblUsuarios);
 
-        jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 30, -1, -1));
+        jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 40, -1, -1));
 
         jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/florista.png"))); // NOI18N
-        jPanel3.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(-100, 50, -1, -1));
+        jPanel3.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(-120, 50, -1, -1));
 
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/flower-2.png"))); // NOI18N
         jLabel8.setText("jLabel8");
@@ -136,14 +190,31 @@ public class MenuUsuarios extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-       cargarTabla();
+
+        lblUsuarioConectado.setText(nombreUsuario);
+        cargarTabla();
+
     }//GEN-LAST:event_formWindowOpened
+
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+
+        this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+    }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void btnCargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarActionPerformed
+
+        cargarTabla();
+    }//GEN-LAST:event_btnCargarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCargar;
+    private javax.swing.JButton btnSalir;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -156,6 +227,7 @@ public class MenuUsuarios extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblUsuarioConectado;
     private javax.swing.JTable tblUsuarios;
     // End of variables declaration//GEN-END:variables
 
@@ -184,18 +256,14 @@ public class MenuUsuarios extends javax.swing.JFrame {
             for (Usuario usuario : listaDeUsuarios) {
 
                 // Caragmos todo, menos la contraseña, obviamente
-                
                 // Mostramos además el nombre del rol del usuario.getRolUsuario().getNombreRol()
-                
                 Object[] registroUsuario = {usuario.getId(), usuario.getNombreUsuario(), usuario.getRolUsuario().getNombreRol()};
 
-                
                 modeloTabla.addRow(registroUsuario);
 
             }
 
         }
     }
-    
-    
+
 }

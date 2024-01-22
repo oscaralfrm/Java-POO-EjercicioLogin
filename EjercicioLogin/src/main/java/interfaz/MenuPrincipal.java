@@ -99,8 +99,9 @@ public class MenuPrincipal extends javax.swing.JFrame {
         btnLogin.setBackground(new java.awt.Color(51, 153, 0));
         btnLogin.setFont(new java.awt.Font("Cantora One", 1, 36)); // NOI18N
         btnLogin.setForeground(new java.awt.Color(255, 255, 255));
-        btnLogin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/leaf.png"))); // NOI18N
+        btnLogin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/login.png"))); // NOI18N
         btnLogin.setText("Login");
+        btnLogin.setBorderPainted(false);
         btnLogin.setDefaultCapable(false);
         btnLogin.setIconTextGap(6);
         btnLogin.addActionListener(new java.awt.event.ActionListener() {
@@ -110,11 +111,12 @@ public class MenuPrincipal extends javax.swing.JFrame {
         });
         bgLeft.add(btnLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 280, 230, -1));
 
-        btnSalir.setBackground(new java.awt.Color(51, 153, 0));
+        btnSalir.setBackground(new java.awt.Color(255, 102, 102));
         btnSalir.setFont(new java.awt.Font("Cantora One", 1, 36)); // NOI18N
         btnSalir.setForeground(new java.awt.Color(255, 255, 255));
         btnSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/right-down.png"))); // NOI18N
         btnSalir.setText("Salir");
+        btnSalir.setBorderPainted(false);
         btnSalir.setDefaultCapable(false);
         btnSalir.setIconTextGap(15);
         btnSalir.addActionListener(new java.awt.event.ActionListener() {
