@@ -3,7 +3,6 @@ package logica;
 import interfaz.MenuAdmins;
 import interfaz.MenuUsuarios;
 import java.util.ArrayList;
-import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
 import static javax.swing.WindowConstants.HIDE_ON_CLOSE;
 import persistencia.ControladorPersistencia;
@@ -132,29 +131,6 @@ public class Controlador {
 
     public void editarUsuarioSeleccionado(Usuario usuario, String usuarioNombre, String usuarioContrasena, int idUsuarioRol) {
 
-        ArrayList<Usuario> listaDeUsuarios = controlPersist.traerUsuarios();
-        /*
-        for (Usuario usuario : listaDeUsuarios) {
-            if (!usuario.getNombreUsuario().equals(usuarioNombre)) {
-
-                controlPersist.editarUsuarioSeleccionado(usuario, usuarioNombre, usuarioContrasena, idUsuarioRol);
-
-                // Dejamos un mensajito...
-                JOptionPane.showMessageDialog(null, "Usuario editado exitosamente");
-                
-            } else {
-                
-                // Dejamos mensajito de error o de advertencia
-                JOptionPane.showMessageDialog(null, 
-                        "No se puede editar un usuario para que tenga el mismo nombre que otro",
-                        "Error", JOptionPane.ERROR_MESSAGE);
-                
-                break;
-            }
-        }
-*/
-        
-        
         // Empezamos a settear lo correspondiente... 
         
         usuario.setNombreUsuario(usuarioNombre);

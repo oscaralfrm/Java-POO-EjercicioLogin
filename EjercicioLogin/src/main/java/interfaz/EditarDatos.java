@@ -162,14 +162,37 @@ public class EditarDatos extends javax.swing.JFrame {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
 
-        String mensaje = "";
-
-        String nombreUsuario = txtUsuario.getText();
-        String contrasenaUsuario = String.valueOf(txtContrasena.getText());
-
-        mensaje = controlador.validarUsuario(nombreUsuario, contrasenaUsuario);
-
+        String usuarioNombre = txtUsuario.getText();
+        String usuarioContrasena = txtContrasena.getText();
+        int idUsuarioRol = cmbRol.getSelectedIndex() + 1;
         
+        // Pasamos al controlador los datos correspondientes...
+        
+        // Hay que validar de que el nombre de usuario por el que se va a cambiar, no exista ya
+        // en la BBDD, se tiene que hacer a nivel de la LÓGICA, no de la interfaz.
+        
+        ArrayList<Usuario> listaDeUsuarios = controlador.traerUsuarios();
+        
+        for (Usuario usuarioArreglo : listaDeUsuarios) {
+            if (!usuarioArreglo.getNombreUsuario().equals(usuarioNombre)) {
+
+                controlador.editarUsuarioSeleccionado(usuario, usuarioNombre, usuarioContrasena, idUsuarioRol);
+
+                // Dejamos un mensajito...
+                JOptionPane.showMessageDialog(null, "Usuario editado exitosamente");
+                break;
+                
+            } else {
+                
+                // Dejamos mensajito de error o de advertencia
+                JOptionPane.showMessageDialog(null, 
+                        "No se puede editar un usuario para que tenga el mismo nombre que otro",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                
+                break;
+            }
+        }
+
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
@@ -203,36 +226,7 @@ public class EditarDatos extends javax.swing.JFrame {
         } else {
             cmbRol.setSelectedIndex(1);
         }
-        
-        // Pasamos al controlador los datos correspondientes...
-        
-        // Hay que validar de que el nombre de usuario por el que se va a cambiar, no exista ya
-        // en la BBDD, se tiene que hacer a nivel de la LÓGICA, no de la interfaz.
-        
-        /*
-        ArrayList<Usuario> listaDeUsuarios = controlador.traerUsuarios();
-        
-        for (Usuario usuario : listaDeUsuarios) {
-            if (!usuario.getNombreUsuario().equals(usuarioNombre)) {
 
-                controlador.editarUsuarioSeleccionado(usuario, usuarioNombre, usuarioContrasena, idUsuarioRol);
-
-                // Dejamos un mensajito...
-                JOptionPane.showMessageDialog(null, "Usuario editado exitosamente");
-                
-            } else {
-                
-                // Dejamos mensajito de error o de advertencia
-                JOptionPane.showMessageDialog(null, 
-                        "No se puede editar un usuario para que tenga el mismo nombre que otro",
-                        "Error", JOptionPane.ERROR_MESSAGE);
-                
-                break;
-            }
-        }
-*/
-        
-        
         
     }
     
