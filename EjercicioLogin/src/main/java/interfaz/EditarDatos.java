@@ -191,17 +191,25 @@ public class EditarDatos extends javax.swing.JFrame {
         // los datos del objeto Usuario, y los atributos a settear posteriormente
         
         String usuarioNombre = usuario.getNombreUsuario();
-        String usuarioContrasena = usuario.getContrasena();
         
-        // Pedimos que el usuarioRol sea un int, que represente el ID del rol solicitado.
-        // Si es 0 + 1 = 1, es USUARIO, si es 1 + 1 = 2, es ADMINISTRADOR
-        int idUsuarioRol = (cmbRol.getSelectedIndex() + 1);
+        // Deberíamos ocultar la contraseña, no ponerla directamente en la caja de contraseña
+        // String usuarioContrasena = usuario.getContrasena();
+                
+        txtUsuario.setText(usuarioNombre);
+        txtContrasena.setText("********");
+        
+        if (String.valueOf(usuario.getRolUsuario().getNombreRol()).equalsIgnoreCase("Usuario")) {
+            cmbRol.setSelectedIndex(0);
+        } else {
+            cmbRol.setSelectedIndex(1);
+        }
         
         // Pasamos al controlador los datos correspondientes...
         
         // Hay que validar de que el nombre de usuario por el que se va a cambiar, no exista ya
         // en la BBDD, se tiene que hacer a nivel de la LÓGICA, no de la interfaz.
         
+        /*
         ArrayList<Usuario> listaDeUsuarios = controlador.traerUsuarios();
         
         for (Usuario usuario : listaDeUsuarios) {
@@ -222,8 +230,8 @@ public class EditarDatos extends javax.swing.JFrame {
                 break;
             }
         }
+*/
         
-        limpiarCajas();
         
         
     }
